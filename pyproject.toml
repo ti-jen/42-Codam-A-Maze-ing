@@ -1,0 +1,23 @@
+
+[project]
+name = "mazegen-1.0.0-py3-tkroon-marde-bo"
+version = "0.0.1"
+authors = [
+  { name="tkroon"},
+  { name="marde-bo"},
+]
+description = "generates a maze in 42 A-maze-ing standard"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+license = "MIT"
+license-files = ["LICENSE.md"]
+
+
+[tool.setuptools.packages.find]
+include = ["maze_generator*",
+  "maze_solver*",
+]
+exclude = ["virt"]
