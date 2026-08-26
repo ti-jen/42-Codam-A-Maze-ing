@@ -90,6 +90,17 @@ def main() -> None:
                               output_file=file.get('OUTPUT', 'OUTPUT_FILE'),
                               pattern=Patterns(file.get('EXTRA', 'PATTERN')),
                               seed=file.getint('EXTRA', 'SEED'))
+
+        if config.entry == config.exit:
+            raise ValueError("entry and exit can't be on the same place")
+        if (config.entry[1] >= config.height or config.entry[1] < 0 or
+                config.entry[0] >= config.width or
+                config.entry[0] < 0):
+            raise ValueError("entry point is outside of maze")
+        if (config.exit[1] >= config.height or config.exit[1] < 0 or
+                config.exit[0] >= config.width or
+                config.exit[0] < 0):
+            raise ValueError("exit point is outside of maze")
     except ValidationError as exc:
         er = exc.errors()
         for e in er:
@@ -104,16 +115,23 @@ def main() -> None:
 
     pattern_error: str | None = None
     try:
-        maze = gen_maze(config.width,
-                        config.height,
+        maze = gen_maze(config.height,
+                        config.width,
                         config.is_perfect,
                         config.pattern.value,
                         config.seed)
+        if maze[config.entry[1]][config.entry[0]] == 'f':
+            raise ValueError("entry can't be placed on pattern")
+        if maze[config.exit[1]][config.exit[0]] == 'f':
+            raise ValueError("exit can't be placed on pattern")
+    except ValueError as e:
+        print(e)
+        exit()
     except PatternError as e:
         pattern_error = str(e)
 
-        maze = gen_maze(config.width,
-                        config.height,
+        maze = gen_maze(config.height,
+                        config.width,
                         config.is_perfect,
                         None,
                         config.seed)
