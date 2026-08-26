@@ -257,16 +257,16 @@ def run_display(
 
             if pattern_error is not None:
                 maze = gen_maze(
-                    width,
                     height,
+                    width,
                     is_perfect,
                     None,
                     regenerate_seed,
                 )
             else:
                 maze = gen_maze(
-                    width,
                     height,
+                    width,
                     is_perfect,
                     pattern,
                     regenerate_seed,
